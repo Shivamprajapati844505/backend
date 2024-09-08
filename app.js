@@ -10,6 +10,7 @@ const app = express();
 
 //Specify all the routes here
 const authRoutes = require("./routes/authRoutes");
+const projectRoutes = require("./routes/projectRoutes");
 
 //Specify all the middlewares here
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use(cookieParser());
 
 //Location of the routes of pages
 app.use("/auth", authRoutes);
+app.use("/projects", projectRoutes);
 
 const USERNAME = process.env.USER_NAME;
 const PASSWORD = process.env.PASSWORD;
