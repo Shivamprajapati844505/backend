@@ -26,7 +26,7 @@ exports.login = async(req,res) => {
 
 // user signup page
 exports.signup = async(req,res) =>{
-    const { username,email,password } = req.body;
+    let { userName,email,password } = req.body;
 
     try{
         let user = await User.findOne({email}); 
@@ -37,7 +37,7 @@ exports.signup = async(req,res) =>{
         const hashedPassword = await bcrypt.hash(password, salt);
         password = hashedPassword;
 
-        user = new User({ username,email,password });
+        user = new User({ userName,email,password });
         await user.save();
         const token = jwt.sign({id: user._id}, "Cheen Tapak Dam Dam", {expiresIn: '1h'})
         res.status(201).json({token, user: {id: user._id, email: user.email, role: user.role}})
