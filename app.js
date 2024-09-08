@@ -2,6 +2,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
+const cookieParser = require('cookie-parser');
 const cors = require("cors");
 require('dotenv').config();
 
@@ -14,6 +15,7 @@ const authRoutes = require("./routes/authRoutes");
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(cors());
+app.use(cookieParser());
 
 //Location of the routes of pages
 app.use("/auth", authRoutes);

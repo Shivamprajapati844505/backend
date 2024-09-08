@@ -1,1 +1,17 @@
 const jwt = require('jsonwebtoken');
+
+const authMiddleware = (req,res,next) =>{
+    const token = req.header('Authorization');
+
+    if(!token)
+        return res.status(401).json({message:"No Authorization, access denied"});
+
+    try{
+        const decoded = jwt.verify(token, "CheenTapakDamDam");
+        req.user = decoded.user;
+    } catch(err) {
+        res.status(401).json({message:"Token is not valid"});
+    }
+}
+
+module.exports = authMiddleware;
