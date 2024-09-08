@@ -8,7 +8,7 @@ require('dotenv').config();
 const app = express();
 
 //Specify all the routes here
-const blogRoutes = require("./routes/authRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 //Specify all the middlewares here
 app.use(express.json());
@@ -16,7 +16,7 @@ app.use(morgan('dev'));
 app.use(cors());
 
 //Location of the routes of pages
-app.use("/auth", blogRoutes);
+app.use("/auth", authRoutes);
 
 const USERNAME = process.env.USER_NAME;
 const PASSWORD = process.env.PASSWORD;
