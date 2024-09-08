@@ -17,7 +17,7 @@ exports.login = async(req,res) => {
             return res.status(404).json({message:"Invalid Credentials"})
 
         const token = jwt.sign({id:user._id}, "Cheen Tapak Dam Dam", {expires:"1h"});
-        res.json({ token, user:{id: user._id, email: user.email, role: user.role} });
+        res.json({ token, user:{id: user._id, email: user.email} });
     } catch(err) {
         res.status(500).json({message: 'Server error', error: err.message});
     }
@@ -26,7 +26,7 @@ exports.login = async(req,res) => {
 
 // user signup page
 exports.signup = async(req,res) =>{
-    let { userName,email,password } = req.body;
+    let { username,email,password } = req.body;
 
     try{
         let user = await User.findOne({email}); 
@@ -37,10 +37,10 @@ exports.signup = async(req,res) =>{
         const hashedPassword = await bcrypt.hash(password, salt);
         password = hashedPassword;
 
-        user = new User({ userName,email,password });
+        user = new User({ username,email,password });
         await user.save();
         const token = jwt.sign({id: user._id}, "Cheen Tapak Dam Dam", {expiresIn: '1h'})
-        res.status(201).json({token, user: {id: user._id, email: user.email, role: user.role}})
+        res.status(201).json({token, user: {id: user._id, email: user.email}})
     } catch(err){
         return res.status(500).json({message:"Server failed"});
     }
