@@ -5,6 +5,8 @@ const morgan = require("morgan");
 const cookieParser = require('cookie-parser');
 const cors = require("cors");
 require('dotenv').config();
+const User = require('./models/user')
+
 
 const app = express();
 
@@ -12,6 +14,8 @@ const app = express();
 const authRoutes = require("./routes/authRoutes");
 const projectRoutes = require("./routes/projectRoutes");
 const taskRoutes = require("./routes/taskRoutes");
+const userRoutes = require("./routes/userRoutes")
+const errorHandler = require('./middleware/errorHandler');
 
 //Specify all the middlewares here
 app.use(express.json());
@@ -24,24 +28,45 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.get("/users",(req,res)=>{
-    const token = req.header('Authorization').replace('Bearer ', '');
-    if (!token) {
-        return res.status(401).json({ error: 'Authentication failed!' });
-    }
 
+// app.get("/users", (req, res) => {
+//     // Extract the token from the Authorization header
+//     const authHeader = req.header('Authorization');
+//     if (!authHeader || !authHeader.startsWith('Bearer ')) {
+//         return res.status(401).json({ error: 'Authentication header missing or invalid!' });
+//     }
+
+//     const token = authHeader.replace('Bearer ', '');
+//     if (!token) {
+//         return res.status(401).json({ error: 'Token missing!' });
+//     }
+
+//     try {
+//         // Verify the token
+//         const decoded = jwt.verify(token, JWT_SECRET);
+//         req.user = decoded;
+//         return res.status(200).json({ user: req.user });
+//     } catch (err) {
+//         return res.status(401).json({ error: 'Invalid token!' });
+//     }
+// });
+
+app.get('/users', async (req, res) => {
     try {
-        const decoded = jwt.verify(token, JWT_SECRET);
-        req.user = decoded;
-        return res.status(200).json({user:req.user});
+        const users = await User.find(); // Query to find all users
+        res.status(200).json(users); // Send the list of users
     } catch (err) {
-        res.status(401).json({ error: 'Invalid token!' });
+        res.status(500).json({ error: 'Server error!' });
     }
-})
+});
+
 //Location of the routes of pages
 app.use("/auth", authRoutes);
-// app.use("/projects", projectRoutes);
+app.use("/projects", projectRoutes);
 app.use('/tasks', taskRoutes);
+app.use('/users', userRoutes);
+
+app.use(errorHandler);
 
 const USERNAME = process.env.USER_NAME;
 const PASSWORD = process.env.PASSWORD;
@@ -65,3 +90,5 @@ app.listen(3000, ()=>{
 app.get('/', (req,res)=>{
     res.send("Homepage")
 })
+
+module.exports = app;
