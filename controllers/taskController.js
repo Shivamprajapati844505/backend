@@ -11,9 +11,9 @@ exports.getTaskByProject = async(req,res) =>{
 
 exports.getTaskById = async(req,res) =>{
     try{
-        const task = await Task.findById(req.params.taskId).populate('project', 'name');
+        const task = await Task.findById(req.params.taskId).populate('project', 'title');
         if(!task)
-            return res.status(500).json({message:"Server error", error:err.message});
+            return res.status(500).json({message:"Task not found", error:err.message});
         res.json(task);
     } catch(err) {
         res.status(500).json({message:'Server error', error:err.message});
@@ -21,9 +21,9 @@ exports.getTaskById = async(req,res) =>{
 }
 
 exports.createTask = async(req,res) =>{
-    const { name,description,status,project } = req.body;
+    const { name,description,status,project,priority,assignedTo } = req.body;
     try{
-        const newTask = new Task({ name,description,status,project });
+        const newTask = new Task({ name,description,status,project,priority,assignedTo });
         const savedTask = await newTask.save();
         res.status(201).json(savedTask);
     } catch(err) {
@@ -32,12 +32,12 @@ exports.createTask = async(req,res) =>{
 }
 
 exports.updateTask = async(req,res) =>{
-    const { name,description,status } = req.body;
+    const { name,description,status,priority } = req.body;
 
     try{
         const updatedTask = await Task.findByIdAndUpdate(
             req.params.taskId,
-            { name,description,status },
+            { name,description,status,priority },
             { new:true }
         )
     } catch(err) {

@@ -2,7 +2,7 @@ const Project = require("../models/project");
 
 exports.getAllProjects = async(req,res)=>{
     try{
-        const projects = await Project.find().populate('owner', 'name email');
+        const projects = await Project.find().populate('generatedBy', 'title email');
         res.json(projects);
     } catch(err) {
         res.status(500).json({message:"Server Error", error: err.message});
@@ -11,7 +11,7 @@ exports.getAllProjects = async(req,res)=>{
 
 exports.getProjectById = async (req,res) =>{
     try{
-        const project = await Project.findById(req.params.projectId).populate('owner', 'name email');
+        const project = await Project.findById(req.params.projectId).populate('generatedBy', 'title email');
         if(!project)
             return res.status(404).json({message:"Products not found"});
     } catch(err) {
@@ -20,10 +20,10 @@ exports.getProjectById = async (req,res) =>{
 }
 
 exports.createProject = async(req,res) =>{
-    const {name,description,owner} = req.body;
+    const {title,content,generatedBy} = req.body;
 
     try{
-        const newProject = new Project({name,description,owner});
+        const newProject = new Project({title,content,generatedBy});
         const savedProject = await newProject.save();
         res.status(201).json(savedProject);
     }catch(err){
@@ -32,11 +32,11 @@ exports.createProject = async(req,res) =>{
 }
 
 exports.updateProjects = async(req,res) =>{
-    const {name,description} = req.body;
+    const {title,content} = req.body;
     try{
         const updatedProject = await Project.findByIdAndUpdate(
             req.params.projectId,
-            {name, description},
+            {title, content},
             {new:true}
         );
         if(!updatedProject)
