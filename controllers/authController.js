@@ -35,30 +35,30 @@ exports.login = async(req,res) => {
 
 
 // user signup page
-exports.signup = async(req,res) =>{
-    let { username,email,password,role } = req.body;
-
-    try{
-        let user = await User.findOne({email}); 
-        if(user)
-            return res.status(404).json({message:"User Already Exists"});
+exports.signup = async (req, res) => {
+    try {
+        const { username, email, password, role } = req.body;
+        let user = await User.findOne({ email });
+        if (user) return res.status(400).json({ message: "User Already Exists" });
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        password = hashedPassword;
 
-        user = new User({ username,email,password,role });
+        user = new User({ username, email, password: hashedPassword, role });
         await user.save();
-        const token = jwt.sign({id: user._id}, JWT_SECRET, {expiresIn: '1h'});
+
+        const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
         res.cookie('token', token, {
-            expires: new Date(Date.now + 3600000)
+            expires: new Date(Date.now() + 3600000)
         });
 
-        res.status(201).json({token, user: {id: user._id, email: user.email, role:user.role}});
-    } catch(err){
-        return res.status(500).json({message:"Server failed"});
+        res.status(201).json({ token, user: { id: user._id, email: user.email, role: user.role } });
+    } catch (err) {
+        console.error('Signup error:', err);
+        res.status(500).json({ message: "Server error", error: err.message });
     }
-}
+};
+
 
 exports.getProfile = async(req,res) =>{
     try{
