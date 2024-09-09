@@ -15,8 +15,14 @@ const projectRoutes = require("./routes/projectRoutes");
 //Specify all the middlewares here
 app.use(express.json());
 app.use(morgan('dev'));
-app.use(cors());
 app.use(cookieParser());
+
+const corsOptions = {
+    origin: 'http://localhost:5173', // Replace with your client origin
+    credentials: true, // Allow cookies to be sent
+};
+
+app.use(cors(corsOptions));
 
 //Location of the routes of pages
 app.use("/auth", authRoutes);

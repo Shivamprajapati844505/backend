@@ -6,18 +6,16 @@ const JWT_SECRET = "CheenTapakDamDam";
 
 // user login page
 exports.login = async(req,res) => {
-    const { email,password,role } = req.body;
-
     try{
+        const { email,password,role } = req.body;
+
         const user = await User.findOne({email});
-        
         if(!user)
             return res.status(404).json({message:"User not found"});
-
         
         if(role !== user.role)
             return res.status(404).json({message:"{Person doesn't exist with this code}"})
-
+        
         const isMatch = await bcrypt.compare(password, user.password);
         
         if(!isMatch)
@@ -25,8 +23,10 @@ exports.login = async(req,res) => {
 
         const token = jwt.sign({id:user._id}, JWT_SECRET, {expiresIn:"1h"});
         res.cookie('token', token, {
-            expires: new Date(Date.now + 3600000)
+            expires: new Date(Date.now() + 3600000),  
+            sameSite: 'Strict'  
         });
+        
         res.json({ token, user:{id: user._id, email: user.email, role:user.role} });
     } catch(err) {
         res.status(500).json({message: 'Server error', error: err.message});

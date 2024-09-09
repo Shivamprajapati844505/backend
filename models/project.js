@@ -6,6 +6,7 @@ const projectSchema = new Schema({
     content:{type:String, required:true},
     generatedBy:{type:Schema.Types.ObjectId, ref:'User', required:true},
     project:{type:Schema.Types.ObjectId, ref:'Project', required:true},
+    priority:{type:String, enum:['Low', 'Medium', 'High'], default:'Medium'},
     createdAt:{type:Date, default:Date.now}
 });
 
