@@ -21,7 +21,7 @@ exports.login = async(req,res) => {
         if(!isMatch)
             return res.status(404).json({message:"Invalid Credentials"})
 
-        const token = jwt.sign({id:user._id}, JWT_SECRET, {expiresIn:"1h"});
+        const token = jwt.sign({id:user._id, username:user.username}, JWT_SECRET, {expiresIn:"1h"});
         res.cookie('token', token, {
             expires: new Date(Date.now() + 3600000*5),  
             sameSite: 'Strict'  
@@ -59,6 +59,15 @@ exports.signup = async (req, res) => {
         res.status(500).json({ message: "Server error", error: err.message });
     }
 };
+
+exports.logout = (req, res) => {
+    try {
+        res.clearCookie('token'); // Clear the cookie named 'token'
+        res.status(200).json({ message: 'Logout successful' });
+    } catch (err) {
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+}; 
 
 
 exports.getProfile = async(req,res) =>{
