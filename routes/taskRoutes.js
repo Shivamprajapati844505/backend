@@ -4,14 +4,19 @@ const taskController = require('../controllers/taskController');
 const authMiddleware = require('../middleware/authMiddleware');
 const roleMiddleware = require('../middleware/roleMiddleware');
 
-router.get('/project/:projectId', authMiddleware, taskController.getTaskById);
+// Get tasks by project ID
+router.get('/project/:projectId', authMiddleware, taskController.getTaskByProject);
 
+// Get a task by task ID
 router.get('/:taskId', authMiddleware, taskController.getTaskById);
 
-router.post('/project/:projectId', authMiddleware, taskController.createTask);
+// Create a task for a specific project
+router.post('/project/:projectId', authMiddleware, roleMiddleware(['admin', 'manager']), taskController.createTask);
 
+// Update a task by task ID
 router.put('/:taskId', authMiddleware, roleMiddleware(['admin', 'manager']), taskController.updateTask);
 
+// Delete a task by task ID
 router.delete('/:taskId', authMiddleware, roleMiddleware(['admin']), taskController.deleteTask);
 
 module.exports = router;

@@ -88,7 +88,26 @@ app.listen(3000, ()=>{
 
 
 app.get('/', (req,res)=>{
-    res.send("Homepage")
+    res.send("Homepage");
 })
+
+app.get('/managers', async (req, res) => {
+    try {
+        const managers = await User.find({ role: 'manager' }); 
+        res.status(200).json(managers);
+    } catch (err) {
+        res.status(500).json({ message: 'Error fetching managers', error: err });
+    }
+});
+
+app.get('/teammembers', async (req, res) => {
+    try {
+        const teammember = await User.find({ role: 'teammember' }); 
+        res.status(200).json(teammember);
+    } catch (err) {
+        res.status(500).json({ message: 'Error fetching teammember', error: err });
+    }
+});
+
 
 module.exports = app;
