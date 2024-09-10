@@ -1,4 +1,5 @@
 const Task = require('../models/task');
+const Project = require('../models/project');
 
 // Get tasks by project ID
 exports.getTaskByProject = async (req, res) => {
@@ -10,10 +11,13 @@ exports.getTaskByProject = async (req, res) => {
     }
 };
 
+
 // Get a single task by task ID
 exports.getTaskById = async (req, res) => {
     try {
-        const task = await Task.findById(req.params.taskId).populate('project', 'title').populate('assignedTo', 'username'); // Populate assignedTo with username
+        const task = await Task.findById(req.params.taskId)
+            .populate('project', 'title')
+            .populate('assignedTo', 'username'); // Populate assignedTo with username
         if (!task)
             return res.status(404).json({ message: "Task not found" });
         res.json(task);
@@ -24,10 +28,18 @@ exports.getTaskById = async (req, res) => {
 
 // Create a new task
 exports.createTask = async (req, res) => {
+    const { projectId } = req.params;
     const { title, content, status, project, priority, assignedTo } = req.body;
     try {
         const newTask = new Task({ title, content, status, project, priority, assignedTo });
         const savedTask = await newTask.save();
+        
+        // Optionally add the task to the project's task array
+        await Project.findByIdAndUpdate(
+            projectId,
+            { $push: { tasks: savedTask._id } }
+        );
+
         res.status(201).json(savedTask);
     } catch (err) {
         res.status(500).json({ message: 'Server error', error: err.message });
@@ -54,9 +66,17 @@ exports.updateTask = async (req, res) => {
 // Delete a task
 exports.deleteTask = async (req, res) => {
     try {
+        // Find and delete the task
         const deletedTask = await Task.findByIdAndDelete(req.params.taskId);
         if (!deletedTask)
             return res.status(404).json({ message: "Task not found" });
+
+        // Optionally remove the task from the project's task array
+        await Project.findByIdAndUpdate(
+            deletedTask.project,
+            { $pull: { tasks: deletedTask._id } }
+        );
+
         res.json({ message: "Task deleted successfully" });
     } catch (err) {
         res.status(500).json({ message: "Server error", error: err.message });

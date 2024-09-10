@@ -10,9 +10,9 @@ router.get('/project/:projectId', authMiddleware, taskController.getTaskByProjec
 router.get('/:taskId', authMiddleware, taskController.getTaskById);
 
 // Create a task for a specific project
-router.post('/project/:projectId', authMiddleware,  taskController.createTask);
+router.post('/project/add/:projectId', authMiddleware,  taskController.createTask);
 
-// Update a task by task ID
+// Update a task by task ID 
 router.put('/:taskId', authMiddleware, taskController.updateTask);
 
 // Delete a task by task ID

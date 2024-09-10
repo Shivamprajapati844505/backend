@@ -5,7 +5,8 @@ const projectSchema = new Schema({
     title: { type: String, required: true, trim: true },
     content: { type: String, required: true },
     priority: { type: String, enum: ['Low', 'Medium', 'High'], default: 'Medium' },
-    managers: [{ type: Schema.Types.ObjectId, ref: 'User' }], // Field for assigned managers
+    managers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }],
     createdAt: { type: Date, default: Date.now }
 });
 
