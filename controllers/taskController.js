@@ -21,23 +21,21 @@ exports.getTaskById = async(req,res) =>{
 }
 
 exports.createTask = async(req,res) =>{
-    const { name,description,status,project,priority,assignedTo } = req.body;
-    try{
-        const newTask = new Task({ name,description,status,project,priority,assignedTo });
+        const { title,content,status,project,priority,assignedTo } = req.body;
+        const newTask = new Task({ title,content,status,project,priority,assignedTo });
+        console.log(newTask);
         const savedTask = await newTask.save();
-        res.status(201).json(savedTask);
-    } catch(err) {
-        res.status(500).json({message:'server error', error:err.message});
-    }
+        return res.status(201).json(savedTask);
+    
 }
 
 exports.updateTask = async(req,res) =>{
-    const { name,description,status,priority } = req.body;
+    const { title,content,status,priority } = req.body;
 
     try{
         const updatedTask = await Task.findByIdAndUpdate(
             req.params.taskId,
-            { name,description,status,priority },
+            { title,content,status,priority },
             { new:true }
         )
     } catch(err) {

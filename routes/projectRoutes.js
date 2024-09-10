@@ -8,7 +8,7 @@ router.get('/', authMiddleware, projectController.getAllProjects);
 
 router.get('/:projectId', authMiddleware, projectController.getProjectById);
 
-router.post('/', authMiddleware, roleMiddleware(['admin', 'manager']), projectController.createProject);
+router.post('/', authMiddleware, projectController.createProject);
 
 router.put('/:projectId', authMiddleware, roleMiddleware(['admin', 'manager']), projectController.updateProjects);
 

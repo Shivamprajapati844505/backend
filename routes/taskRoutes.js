@@ -8,7 +8,7 @@ router.get('/project/:projectId', authMiddleware, taskController.getTaskById);
 
 router.get('/:taskId', authMiddleware, taskController.getTaskById);
 
-router.post('/project/:projectId', authMiddleware, roleMiddleware(['admin','manager']), taskController.createTask);
+router.post('/project/:projectId', authMiddleware, taskController.createTask);
 
 router.put('/:taskId', authMiddleware, roleMiddleware(['admin', 'manager']), taskController.updateTask);
 
