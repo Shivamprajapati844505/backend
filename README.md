@@ -20,7 +20,7 @@
 
 ---
 
-## 📋 About the Project
+## 📋 Information the Project
 
 The **PeakPlanner** is a web application designed to help teams manage tasks, track tasks progress, and collaborate in real-time. Built with the MERN stack, it offers a modern and intuitive interface. PeakPlanner combines powerful task management with togglemde for people to suit with their preference.
 
