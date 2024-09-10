@@ -99,7 +99,7 @@ app.get('/admin', async (req, res) => {
         res.status(500).json({ message: 'Error fetching admin', error: err });
     }
 });
-
+ 
 app.get('/managers', async (req, res) => {
     try {
         const managers = await User.find({ role: 'manager' }); 
