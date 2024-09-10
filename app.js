@@ -91,6 +91,15 @@ app.get('/', (req,res)=>{
     res.send("Homepage");
 })
 
+app.get('/admin', async (req, res) => {
+    try {
+        const admin = await User.find({ role: 'admin' }); 
+        res.status(200).json(admin);
+    } catch (err) {
+        res.status(500).json({ message: 'Error fetching admin', error: err });
+    }
+});
+
 app.get('/managers', async (req, res) => {
     try {
         const managers = await User.find({ role: 'manager' }); 

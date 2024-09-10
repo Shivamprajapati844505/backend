@@ -4,7 +4,6 @@ const Project = require("../models/project");
 exports.getAllProjects = async (req, res) => {
     try {
         const projects = await Project.find()
-            .populate('generatedBy', 'name email')
             .populate('managers', 'name email'); // Populating managers
         res.json(projects);
     } catch (err) {
@@ -17,7 +16,6 @@ exports.getAllProjects = async (req, res) => {
 exports.getProjectById = async (req, res) => {
     try {
         const project = await Project.findById(req.params.projectId)
-            .populate('generatedBy', 'name email')
             .populate('managers', 'name email'); // Populating managers
         if (!project)
             return res.status(404).json({ message: "Project not found" });
@@ -31,14 +29,14 @@ exports.getProjectById = async (req, res) => {
 // Create a new project
 exports.createProject = async (req, res) => {
     try {
-        const { title, content, generatedBy, priority, managers } = req.body;
+        const { title, content, priority, managers } = req.body;
         
         // Validate incoming data
-        if (!title || !content || !generatedBy) {
+        if (!title || !content) {
             return res.status(400).json({ message: "Required fields missing" });
         }
 
-        const newProject = new Project({ title, content, generatedBy, priority, managers });
+        const newProject = new Project({ title, content, priority, managers });
         const savedProject = await newProject.save();
         res.status(201).json(savedProject);
     } catch (err) {
@@ -55,8 +53,7 @@ exports.updateProject = async (req, res) => {
             req.params.projectId,
             { title, content, priority, managers },
             { new: true }
-        ).populate('generatedBy', 'name email')
-            .populate('managers', 'name email');
+        ).populate('managers', 'name email');
         if (!updatedProject)
             return res.status(404).json({ message: 'Project not found' });
         res.json(updatedProject);
