@@ -1,22 +1,20 @@
 # 🌟 PeakPlanner (MERN Stack)
 
-![MERN](https://img.shields.io/badge/MERN-Stack-61DAFB?logo=mongodb&logoColor=white&style=for-the-badge)
-![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white&style=for-the-badge)
-![Express](https://img.shields.io/badge/Express-000000?logo=express&logoColor=white&style=for-the-badge)
 ![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=white&style=for-the-badge)
-![Node.js](https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=white&style=for-the-badge)
-![JWT](https://img.shields.io/badge/JWT-000000?logo=JSON%20web%20tokens&logoColor=white&style=for-the-badge)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white&style=for-the-badge)
-![NPM](https://img.shields.io/badge/NPM-CB3837?logo=npm&logoColor=white&style=for-the-badge)
+![Node.js](https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=white&style=for-the-badge)
+![Express](https://img.shields.io/badge/Express-000000?logo=express&logoColor=white&style=for-the-badge)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white&style=for-the-badge)
+![JWT](https://img.shields.io/badge/JWT-000000?logo=JSON%20web%20tokens&logoColor=white&style=for-the-badge)
 
 ---
 
 ## 📖 Table of Contents
 
-1. [About the Project](#about-the-project)
-2. [Features](#features)
+1. [Information about Project](#information-about-project)
+2. [Functionalities](#functionalities)
 3. [Demo](#demo)
-4. [Installation](#installation)
+4. [Installation Guide](#installation-guide)
 5. [Usage](#usage)
 6. [Contact](#contact)
 
@@ -28,7 +26,7 @@ The **PeakPlanner** is a web application designed to help teams manage tasks, tr
 
 ---
 
-## ✨ Features
+## Features
 
 -  **Task Management**: Create, update, and assign projects.
 -  **Dashboard**: View overall project progress and timelines.
@@ -36,13 +34,13 @@ The **PeakPlanner** is a web application designed to help teams manage tasks, tr
 
 ---
 
-## 🎥 Demo
+## Demo
 
-[Watch the demo video](https://drive.google.com/file/d/1nWEojaReui0DnARunmWb7TAAdoXYDTyc/view?usp=sharing) to see the website in action.
+[Watch the demo video](https://drive.google.com/file/d/1nWEojaReui0DnARunmWb7TAAdoXYDTyc/view?usp=sharing) to see the website working.
 
 ---
 
-## ⚙️ Frontend/Backend Installation
+## Frontend/Backend Installation
 
 To run the application locally, follow these steps:
 
@@ -58,8 +56,8 @@ To run the application locally, follow these steps:
 4. Start the server(Frontend):
    ```bash
    npm run dev
-5. Link for Frontend
-   [Go to Frontend](https://github.com/tewarishash12/Project-Management-List-FrontEnd.git)
+5. Link for Backend
+   [Go to Backend](https://github.com/tewarishash12/Project-Management-List-FrontEnd.git)
    
 6. Start the server(Backend):
    ```bash
@@ -82,8 +80,8 @@ To register an admin user through Postman, follow these steps:
 6. **Enter the following JSON data** in the body:
    ```json
    {
-    "username": "admin",
-    "email": "admin@example.com",
+    "username": "lead",
+    "email": "lead@example.com",
     "password": "1234567890",
     "role": "admin"
    }
@@ -92,11 +90,10 @@ To register an admin user through Postman, follow these steps:
 7. **Enter the following JSON data**
    Click "Send" to submit the request.
 
-## 🚀 Usage
+## Usage
 - Access the app at `http://localhost:3000`.
-- **Create Tasks**: Use the dashboard to add new tasks.
-- **Update Tasks**: Edit existing tasks from the task list.
-- **Assign Tasks**: Assign tasks to team members.
+- **Create Tasks**: Use the dashboard to add new projects.
+- **Assign Tasks**: Assign projects to team members.
 
 ## 📬 Contact
 
