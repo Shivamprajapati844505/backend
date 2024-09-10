@@ -14,4 +14,4 @@ router.put('/:projectId', authMiddleware, roleMiddleware(['admin', 'manager']), 
 
 router.delete('/:projectId', authMiddleware, roleMiddleware(['admin']), projectController.deletedProjects);
 
-module.exports = router;
+module.exports = router; 

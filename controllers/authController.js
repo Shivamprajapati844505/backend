@@ -23,7 +23,7 @@ exports.login = async(req,res) => {
 
         const token = jwt.sign({id:user._id}, JWT_SECRET, {expiresIn:"1h"});
         res.cookie('token', token, {
-            expires: new Date(Date.now() + 3600000),  
+            expires: new Date(Date.now() + 3600000*5),  
             sameSite: 'Strict'  
         });
         
@@ -50,7 +50,7 @@ exports.signup = async (req, res) => {
 
         const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
         res.cookie('token', token, {
-            expires: new Date(Date.now() + 3600000)
+            expires: new Date(Date.now() + 3600000*5)
         });
 
         res.status(201).json({ token, user: { id: user._id, email: user.email, role: user.role } });
