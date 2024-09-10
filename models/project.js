@@ -10,4 +10,4 @@ const projectSchema = new Schema({
     createdAt:{type:Date, default:Date.now}
 });
 
-module.exports = mongoose.model('Report', projectSchema);
+module.exports = mongoose.model('Project', projectSchema);
