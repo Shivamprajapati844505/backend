@@ -23,7 +23,7 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 
 const corsOptions = {
-    origin: 'https://project-management-list-frontend.onrender.com/', // Replace with your client origin
+    origin: 'https://project-management-list-frontend.onrender.com', // Replace with your client origin
     credentials: true, // Allow cookies to be sent
 };
 
